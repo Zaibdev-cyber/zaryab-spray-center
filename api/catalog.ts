@@ -1,4 +1,4 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+
 const SB_URL = process.env.SUPABASE_URL!;
 const SB_KEY = process.env.SUPABASE_KEY!;
 async function sb(method: string, endpoint: string, body?: any) {
@@ -6,7 +6,7 @@ async function sb(method: string, endpoint: string, body?: any) {
   const text = await res.text(); return text ? JSON.parse(text) : null;
 }
 const ms = (s: any) => ({ id: s.id, name: s.name, companyName: s.company_name, contactNumber: s.contact_number, email: s.email, address: s.address, notes: s.notes });
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: any, res: any) {
   const type = req.query.type as string;
   const id = req.query.id as string;
   if (type === 'categories') {

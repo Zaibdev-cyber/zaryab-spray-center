@@ -1,4 +1,4 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+
 const SB_URL = process.env.SUPABASE_URL!;
 const SB_KEY = process.env.SUPABASE_KEY!;
 async function sb(method: string, endpoint: string, body?: any) {
@@ -6,7 +6,7 @@ async function sb(method: string, endpoint: string, body?: any) {
   const text = await res.text(); return text ? JSON.parse(text) : null;
 }
 const mp = (p: any) => ({ id: p.id, name: p.name, category: p.category, brand: p.brand, description: p.description, batchNumber: p.batch_number, purchasePrice: p.purchase_price, salePrice: p.sale_price, quantity: p.quantity, unit: p.unit, manufacturingDate: p.manufacturing_date, expiryDate: p.expiry_date, supplierId: p.supplier_id, imageUrl: p.image_url });
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: any, res: any) {
   const id = req.query.id as string;
   if (req.method === 'GET') { const data = await sb('GET', 'products?select=*'); return res.json((data || []).map(mp)); }
   if (req.method === 'POST') {

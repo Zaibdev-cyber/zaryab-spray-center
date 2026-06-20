@@ -1,4 +1,4 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+
 
 const SB_URL = process.env.SUPABASE_URL!;
 const SB_KEY = process.env.SUPABASE_KEY!;
@@ -13,7 +13,7 @@ async function sb(method: string, endpoint: string, body?: any) {
   return text ? JSON.parse(text) : null;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') return res.status(405).end();
   const { username, password } = req.body;
   const data = await sb('GET', `users?username=eq.${encodeURIComponent(username)}&select=*`);

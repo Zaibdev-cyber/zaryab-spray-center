@@ -1,4 +1,4 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+
 const SB_URL = process.env.SUPABASE_URL!;
 const SB_KEY = process.env.SUPABASE_KEY!;
 async function sb(method: string, endpoint: string, body?: any) {
@@ -10,7 +10,7 @@ const ms = (s: any) => ({ id: s.id, name: s.name, companyName: s.company_name, c
 const msa = (s: any) => ({ id: s.id, invoiceNumber: s.invoice_number, date: s.date, cashierId: s.cashier_id, cashierName: s.cashier_name, customerName: s.customer_name, subtotal: s.subtotal, discount: s.discount, grandTotal: s.grand_total, cashReceived: s.cash_received, balanceReturn: s.balance_return, items: s.items });
 const mset = (s: any) => ({ shopName: s.shop_name, shopAddress: s.shop_address, contactNumber: s.contact_number, emailAddress: s.email_address, receiptFooterMessage: s.receipt_footer_message, currencySymbol: s.currency_symbol, themeMode: s.theme_mode });
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: any, res: any) {
   const type = req.query.type as string;
 
   if (type === 'settings') {
