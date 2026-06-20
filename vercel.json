@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/api/auth/login",          "destination": "/api/auth" },
+    { "source": "/api/users/:id/toggle",    "destination": "/api/users?id=:id&toggle=1" },
+    { "source": "/api/users/:id",           "destination": "/api/users?id=:id" },
+    { "source": "/api/users",               "destination": "/api/users" },
+    { "source": "/api/products/:id",        "destination": "/api/products?id=:id" },
+    { "source": "/api/products",            "destination": "/api/products" },
+    { "source": "/api/categories/:id",      "destination": "/api/catalog?type=categories&id=:id" },
+    { "source": "/api/categories",          "destination": "/api/catalog?type=categories" },
+    { "source": "/api/suppliers/:id",       "destination": "/api/catalog?type=suppliers&id=:id" },
+    { "source": "/api/suppliers",           "destination": "/api/catalog?type=suppliers" },
+    { "source": "/api/sales/checkout",      "destination": "/api/sales" },
+    { "source": "/api/sales",               "destination": "/api/sales" },
+    { "source": "/api/stock/history",       "destination": "/api/stock" },
+    { "source": "/api/stock/transaction",   "destination": "/api/stock" },
+    { "source": "/api/dashboard/summary",   "destination": "/api/system?type=dashboard" },
+    { "source": "/api/settings",            "destination": "/api/system?type=settings" },
+    { "source": "/api/logs",                "destination": "/api/system?type=logs" },
+    { "source": "/api/database/backup",     "destination": "/api/system?type=backup" },
+    { "source": "/api/database/restore",    "destination": "/api/system?type=restore" },
+    { "source": "/(.*)",                    "destination": "/index.html" }
+  ]
+}

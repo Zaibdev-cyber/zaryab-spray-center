@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2D6A4F;
+  --color-primary-dark: #1B4332;
+  --color-secondary: #52B788;
+  --color-accent: #95D5B2;
+  --color-warning: #FFB703;
+  --color-danger: #E63946;
+  --color-surface: #FFFFFF;
+  --color-brand-bg: #F0F4F2;
+  --color-brand-sidebar-bg: #1B4332;
+  --color-brand-footer-bg: #081C15;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #F0F4F2;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Custom class specifications extracted from the Design instructions */
+.card-polish {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.05); /* very soft borders */
+  transition: all 0.2s ease-in-out;
+}
+
+.card-polish:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+}
+
+.metric-val-polish {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1B4332;
+  line-height: 1.2;
+}
+
+.table-header-polish {
+  background-color: #F8FAF9;
+  border-bottom: 2px solid #EDF2F0;
+}
+
+.status-pill-polish {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Scrollbar tweaks */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.02);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.25);
+}
