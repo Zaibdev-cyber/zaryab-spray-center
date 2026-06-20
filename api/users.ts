@@ -1,9 +1,13 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sb } from './sb';
+const SB_URL = process.env.SUPABASE_URL!;
+const SB_KEY = process.env.SUPABASE_KEY!;
+async function sb(method: string, endpoint: string, body?: any) {
+  const res = await fetch(`${SB_URL}/rest/v1/${endpoint}`, { method, headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation' }, body: body ? JSON.stringify(body) : undefined });
+  const text = await res.text(); return text ? JSON.parse(text) : null;
+}
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const id = req.query.id as string;
   const toggle = req.query.toggle === '1';
-
   if (req.method === 'GET') {
     const data = await sb('GET', 'users?select=*');
     return res.json((data || []).map((u: any) => ({ id: u.id, username: u.username, name: u.name, role: u.role, active: u.active })));
@@ -34,9 +38,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     await sb('PATCH', `users?id=eq.${id}`, upd);
     return res.json({ success: true });
   }
-  if (req.method === 'DELETE' && id) {
-    await sb('DELETE', `users?id=eq.${id}`);
-    return res.json({ success: true });
-  }
+  if (req.method === 'DELETE' && id) { await sb('DELETE', `users?id=eq.${id}`); return res.json({ success: true }); }
   res.status(405).end();
 }

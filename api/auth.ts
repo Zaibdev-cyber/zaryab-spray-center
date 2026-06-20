@@ -1,5 +1,18 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sb } from './sb';
+
+const SB_URL = process.env.SUPABASE_URL!;
+const SB_KEY = process.env.SUPABASE_KEY!;
+
+async function sb(method: string, endpoint: string, body?: any) {
+  const res = await fetch(`${SB_URL}/rest/v1/${endpoint}`, {
+    method,
+    headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).end();
   const { username, password } = req.body;
@@ -8,7 +21,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!user) return res.status(401).json({ error: 'Invalid username. User not found.' });
   if (!user.active) return res.status(403).json({ error: 'Account deactivated.' });
   if (user.password !== password) return res.status(412).json({ error: 'Incorrect password.' });
-  // Log login
   await sb('POST', 'activity_logs', { id: `LOG-${Date.now()}`, date: new Date().toISOString(), user_id: user.id, user_name: user.name, action: 'User Logged In', details: `${user.name} logged in` }).catch(() => {});
   res.json({ user: { id: user.id, username: user.username, name: user.name, role: user.role, active: user.active } });
 }

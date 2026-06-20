@@ -1,9 +1,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sb, ms } from './sb';
+const SB_URL = process.env.SUPABASE_URL!;
+const SB_KEY = process.env.SUPABASE_KEY!;
+async function sb(method: string, endpoint: string, body?: any) {
+  const res = await fetch(`${SB_URL}/rest/v1/${endpoint}`, { method, headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation' }, body: body ? JSON.stringify(body) : undefined });
+  const text = await res.text(); return text ? JSON.parse(text) : null;
+}
+const ms = (s: any) => ({ id: s.id, name: s.name, companyName: s.company_name, contactNumber: s.contact_number, email: s.email, address: s.address, notes: s.notes });
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const type = req.query.type as string;
   const id = req.query.id as string;
-
   if (type === 'categories') {
     if (req.method === 'GET') { const d = await sb('GET', 'categories?select=*'); return res.json(d || []); }
     if (req.method === 'POST') {
@@ -16,7 +21,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
     if (req.method === 'DELETE' && id) { await sb('DELETE', `categories?id=eq.${id}`); return res.json({ success: true }); }
   }
-
   if (type === 'suppliers') {
     if (req.method === 'GET') { const d = await sb('GET', 'suppliers?select=*'); return res.json((d || []).map(ms)); }
     if (req.method === 'POST') {
@@ -32,6 +36,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
     if (req.method === 'DELETE' && id) { await sb('DELETE', `suppliers?id=eq.${id}`); return res.json({ success: true }); }
   }
-
   res.status(400).json({ error: 'Invalid type' });
 }
