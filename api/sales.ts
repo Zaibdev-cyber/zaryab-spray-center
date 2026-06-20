@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sb, msa } from './_sb';
+import { sb, msa } from './sb';
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'GET') {
     const data = await sb('GET', 'sales?select=*&order=date.desc');

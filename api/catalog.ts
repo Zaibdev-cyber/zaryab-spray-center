@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sb, ms } from './_sb';
+import { sb, ms } from './sb';
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const type = req.query.type as string;
   const id = req.query.id as string;

@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sb } from './_sb';
+import { sb } from './sb';
 const mapT = (t: any) => ({ id: t.id, productId: t.product_id, productName: t.product_name, type: t.type, subType: t.sub_type, quantity: t.quantity, date: t.date, supplierId: t.supplier_id, supplierName: t.supplier_name, notes: t.notes, userId: t.user_id, userName: t.user_name });
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'GET') {

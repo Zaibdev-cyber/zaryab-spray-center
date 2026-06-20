@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sb } from './_sb';
+import { sb } from './sb';
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const id = req.query.id as string;
   const toggle = req.query.toggle === '1';
